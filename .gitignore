@@ -1,8 +1,10 @@
 *.out 
-CMakeLists.txt
 *.o
-Makefile
-CMakeCache.txt
-CMakeFiles/
-cmake_install.cmake
 build/
+*.txt
+bin/
+build/
+obj/
+out/
+.depend
+*.d

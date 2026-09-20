@@ -39,3 +39,4 @@ Which will then build the `mysh` binary that can be run as a program.
 - For commands like `grep "zip"`, mysh will not strip out the quotation marks to pass to grep, rather would pass the entire string including quotation marks to grep. Grep would then search for `"zip"` (including quotation marks).
 - Executing out `cd` with no arguments does not take you back to the home page, rather just asks user to enter an argument.
 - The custom `kill` command does occationally end up killing the shell itself.
+- Piping and I/O redirection do not play together nicely.

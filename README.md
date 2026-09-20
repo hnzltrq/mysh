@@ -4,6 +4,10 @@ A simple UNIX shell written in C. Made as a course project.
 
 ## Build Instructions
 You will need gcc 16.0.0 or higher to compile the C23 code, along with make version 4.0.0 or higher.
+
+Technically nothing here is C23 specific, however it was compiled and run on my system with C23 and tested with that as well, if your version of the GNU GCC compiler does not support GNU C23, change the `-std=gnu23` flag in the make file to `-std=gnu11` (C11 with GNU/POSIX-Linux extensions).
+
+
 To build the project, simply run:
 ```bash
 make
@@ -18,7 +22,7 @@ Which will then build the `mysh` binary that can be run as a program.
 - Uses the [linenoise](https://github.com/antirez/linenoise) library for clean user input.
 
 
-## Issues 
+## Limitations
 - If a user tries to run a command which has more then 63 words (since the 64th string needs to be a NULL), the parsing will overflow and the program fail; presumably no commands that long are required.
 - only the `pwd` and `cd` bash commands are supported, other commands such as aliases, manipulating the directory stack, and scritping, amongst others are completely unsupported.
 - cd command doesnt recognize commonly used short hands such as ~ for the home directory, etc. However the short hands for `..` being a directory up a level and `.` being the current directory are supported as they're built into the linux file system.

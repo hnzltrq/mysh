@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "linenoise.h"
+#include "sh_funcs.h"
 
 int main(void)
 {
@@ -18,7 +19,7 @@ int main(void)
             break;
         }
 
-        
+        parse_and_execute(command); // does the actual work
         
     }
 }

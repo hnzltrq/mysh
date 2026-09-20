@@ -1,18 +1,17 @@
-# Compiler settings, C23 with POSIX/GNU extensions enabeld
+# C23 with warnings, extra warnings and POSIX/GNU extensions enabeld
 CC = gcc
 CFLAGS = -Wall -Wextra -std=gnu23 -Isrc
 
 # Name of the final executable
 TARGET = mysh
 
-# Find all .c files in the current directory
+# Find all .c files in the src directory
 SRCS = $(wildcard src/*.c)
 OBJS = $(SRCS:.c=.o)
 
-# Default target
 all: $(TARGET)
 
-# Link the final executable
+# Links the final binary
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
 
@@ -20,6 +19,6 @@ $(TARGET): $(OBJS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Clean up generated files
+# deletes generated obj files
 clean:
 	rm -f $(OBJS) $(TARGET)

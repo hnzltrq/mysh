@@ -1,4 +1,6 @@
 # mysh
+<sub><sup>Written by M. Hanzla Tariq (2024934)</sup></sub>
+
 A simple UNIX shell written in C. Made as a course project. (CS331 at GIKI). 
 
 
@@ -32,4 +34,3 @@ Which will then build the `mysh` binary that can be run as a program.
 
 
 
-<sub><sup>M. Hanzla Tariq (2024934)</sup></sub>

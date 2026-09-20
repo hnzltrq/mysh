@@ -5,7 +5,7 @@ A simple UNIX shell written in C. Made as a course project.
 ## Build Instructions
 You will need gcc 16.0.0 or higher to compile the C23 code, along with make version 4.0.0 or higher.
 
-Technically nothing here is C23 specific, however it was compiled and run on my system with C23 and tested with that as well, if your version of the GNU GCC compiler does not support GNU C23, change the `-std=gnu23` flag in the make file to `-std=gnu11` (C11 with GNU/POSIX-Linux extensions). Hopfully nothing will break.
+Technically nothing here is C23 specific (no bools, nullptrs or anything newer), however it was compiled and run on my system with C23 and tested with that as well, if your version of the GNU GCC compiler does not support GNU C23, change the `-std=gnu23` flag in the make file to `-std=gnu11` (C11 with GNU/POSIX-Linux extensions). Hopfully nothing will break.
 
 
 To build the project, simply run:
@@ -19,6 +19,7 @@ Which will then build the `mysh` binary that can be run as a program.
 - Standard GNU/Linux commands are fully supported (ls, grep, mkdir, etc)
 - I/O redirection with the `>>`, `>`, `<` operators are also supported. (The here document opeartor `<<` is not supported.)
 - `cd` and `pwd` are built-in.
+- supports pipelining with the `|` opeartor.
 - Uses the [linenoise](https://github.com/antirez/linenoise) library for clean user input.
 
 

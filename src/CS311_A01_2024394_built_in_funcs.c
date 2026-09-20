@@ -50,6 +50,12 @@ void kill2(char **args) {
     }
     
     pid_t target_pid = atoi(args[1]); 
+
+    if (target_pid <= 0) 
+    {
+        fprintf(stderr, "mysh: invalid PID\n");
+        return;
+    }
     
     if (kill(target_pid, SIGTERM) == 0) 
     {

@@ -196,7 +196,9 @@ void parse_and_execute(char *input)
         {
             if (process_list[k].is_active == 1 && process_list[k].pid == reaped_pid) 
             {
-                process_list[k].is_active = 0; // Expunge it
+                process_list[k].is_active = 0; 
+                process_list[k].pid = 0;            
+                process_list[k].name[0] = '\0';
                 printf("[Background process %d (%s) finished]\n", reaped_pid, process_list[k].name);
                 break;
             }
@@ -205,23 +207,6 @@ void parse_and_execute(char *input)
 
     // parsing
 
-    /*    int i = 0;    // (old code, now deprecated)
-    char *args[64]; // Array to hold up to 64 individual strings
-    char *token = strtok(input, " \t");
-    while (token != NULL && i < 63) 
-    {
-        args[i] = token;
-        i++;
-        token = strtok(NULL, " \t"); // Gets the next word
-    }
-    args[i] = NULL; // terminates the char array with a NULL as is needed for exec system calls 
-
-    if (args[0] == NULL) // returns if the commands are empty
-    {
-        return;
-    }
-
-*/
 
     int i = 0;
     char *raw_args[64]; 
@@ -244,14 +229,6 @@ void parse_and_execute(char *input)
     }*/
     
  
-/*   // background process command detection    // old code 
-    int is_background = 0;
-    if (i > 0 && strcmp(args[i-1], "&") == 0) 
-    {
-        is_background = 1;
-        args[i-1] = NULL; 
-    }
-*/
 
     // Execution 
     int start = 0; // Tracks where the current command chunk begins

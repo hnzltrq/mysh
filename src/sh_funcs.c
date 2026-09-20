@@ -37,6 +37,76 @@ void parse_and_execute(char *input)
 
     // Execution 
 
+
+    // scanning and implementing for pipelining 
+
+    int pipe_index = -1;
+    
+    // searhcing for |
+    for (int j = 0; args[j] != NULL; j++) 
+    {
+        if (strcmp(args[j], "|") == 0) 
+        {
+            pipe_index = j;
+            break;
+        }
+    }
+
+    if (pipe_index != -1) // only runs if a pipe is found
+    { 
+        
+        args[pipe_index] = NULL; 
+        
+        char **cmd1 = args; // command 1                
+        char **cmd2 = &args[pipe_index + 1]; // comand 2   
+
+        int pipefd[2];
+        
+        if (pipe(pipefd) == -1) 
+        {
+            perror("ERROR: pipe failure");
+            return;
+        }
+
+        // left side
+        pid_t pid1 = fork();
+        if (pid1 == 0) 
+        {
+            dup2(pipefd[1], STDOUT_FILENO); 
+            
+            close(pipefd[0]);
+            close(pipefd[1]);
+
+            execvp(cmd1[0], cmd1);
+            perror(cmd1[0]);
+            exit(1);
+        }
+
+        // right side
+        pid_t pid2 = fork();
+        if (pid2 == 0) 
+        {
+            // Overwrite keyboard input with the pipe's read end
+            dup2(pipefd[0], STDIN_FILENO);
+            
+            // Close both ends
+            close(pipefd[0]);
+            close(pipefd[1]);
+
+            execvp(cmd2[0], cmd2);
+            perror(cmd2[0]);
+            exit(1);
+        }
+
+        close(pipefd[0]);
+        close(pipefd[1]);
+
+        waitpid(pid1, NULL, 0);
+        waitpid(pid2, NULL, 0);
+        
+        return; 
+    }
+
     // for built in commands (pwd, and cd)
     if (strcmp(args[0], "cd") == 0) {
         cd(args);
@@ -87,7 +157,7 @@ void parse_and_execute(char *input)
             else if (strcmp(args[j], "<") == 0) 
             {
                 int fd = open(args[j+1], O_RDONLY);
-                if (fd < 0) {
+                if (fd < 0) { // if file not opened
                     perror(args[j+1]); 
                     exit(1);
                 }

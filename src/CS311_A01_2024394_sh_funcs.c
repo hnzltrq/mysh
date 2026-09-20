@@ -4,8 +4,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include "sh_funcs.h"
-#include "built_in_funcs.h"
+#include "CS311_A01_2024394_sh_funcs.h"
+#include "CS311_A01_2024394_built_in_funcs.h"
 #include <fcntl.h>
 
 void execute_command(char **args, int is_background)

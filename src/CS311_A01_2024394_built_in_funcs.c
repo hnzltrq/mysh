@@ -4,8 +4,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <signal.h>
-#include "sh_funcs.h"
-#include "built_in_funcs.h"
+#include "CS311_A01_2024394_sh_funcs.h"
+#include "CS311_A01_2024394_built_in_funcs.h"
 
 
 void cd(char **args) {

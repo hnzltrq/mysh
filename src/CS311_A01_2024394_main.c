@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "linenoise.h"
-#include "sh_funcs.h"
+#include "CS311_A01_2024394_sh_funcs.h"
 
 
 ProcessRecord process_list[MAX_PROCESSES] = {0};

@@ -1,5 +1,5 @@
 *.out 
-CMakeList.txt
+CMakeLists.txt
 *.o
 Makefile
 CMakeCache.txt

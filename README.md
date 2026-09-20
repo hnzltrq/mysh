@@ -32,4 +32,4 @@ Which will then build the `mysh` binary that can be run as a program.
 
 
 
-#- M. Hanzla Tariq (2024394)
+<sub><sup>M. Hanzla Tariq (2024934)</sup></sub>

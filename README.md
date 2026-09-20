@@ -1,5 +1,5 @@
 # mysh
-A simple UNIX shell written in C. Made as a course project. 
+A simple UNIX shell written in C. Made as a course project. (CS331 at GIKI). 
 
 
 ## Build Instructions
@@ -28,3 +28,8 @@ Which will then build the `mysh` binary that can be run as a program.
 - only the `pwd` and `cd` bash commands are supported, other commands such as aliases, manipulating the directory stack, and scritping, amongst others are completely unsupported.
 - `cd ` command doesnt recognize commonly used short hands such as `~` for the home directory, etc. However the short hands for `..` being a directory up a level and `.` being the current directory are supported as they're built into the linux file system.
 - It is entirely possible that if the user terminates the running program using the `ctrl+C` short cut, some memory might be left unfreeed, however most Operating systems should be able to deal with that. I think. 
+
+
+
+
+#- M. Hanzla Tariq (2024394)

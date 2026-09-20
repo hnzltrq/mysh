@@ -9,6 +9,20 @@
 #include <fcntl.h>
 
 
+
+// structure for proc information
+typedef struct 
+{
+    pid_t pid;
+    char name[64];
+    int is_active; // 1 = active, 0 = done
+} ProcessRecord;
+
+#define MAX_PROCESSES 64
+extern ProcessRecord process_list[MAX_PROCESSES]; 
+
+
+
 void parse_and_execute(char *input)
 {
     // parsing
@@ -34,6 +48,13 @@ void parse_and_execute(char *input)
         printf("word number %d %s\n", ji, args[ji]);
     }*/
     
+    // background process command detection
+    int is_background = 0;
+    if (i > 0 && strcmp(args[i-1], "&") == 0) 
+    {
+        is_background = 1;
+        args[i-1] = NULL; 
+    }
 
     // Execution 
 
@@ -173,10 +194,31 @@ void parse_and_execute(char *input)
         perror("exec() ERROR"); 
         exit(1); 
     } 
-    else if (pid > 0) {
-        waitpid(pid, NULL, 0);
+    else if (pid > 0) 
+    {
+        
+        if (is_background) 
+        {
+            for (int k = 0; k < MAX_PROCESSES; k++) 
+            {
+                if (process_list[k].is_active == 0) 
+                {
+                    process_list[k].pid = pid;
+                    strncpy(process_list[k].name, args[0], 63);
+                    process_list[k].is_active = 1;
+                    break;
+                }
+            }
+            
+            printf("[Background process started with process ID: %d]\n", pid);
+            
+        } else 
+        {
+            waitpid(pid, NULL, 0);
+        }
     } 
-    else {
+    else 
+    {
         perror("fork() ERROR");
     }
 

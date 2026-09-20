@@ -50,12 +50,55 @@ void parse_and_execute(char *input)
 
     // for non nuilt in commands
     int pid = fork();
-
-    // input redirection if >, >> or <, << show up
     
 
 
     if (pid == 0) {
+
+        // input redirection if >, >> or <, << show up
+        for (int j = 0; args[j] != NULL; j++) 
+        {
+            
+            // Output Redirection 
+
+            // overwrite
+            if (strcmp(args[j], ">") == 0) 
+            {
+                
+                int fd = open(args[j+1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+                dup2(fd, STDOUT_FILENO); 
+                close(fd);               
+                args[j] = NULL;         
+                break;
+            }
+            
+            // appending
+            else if (strcmp(args[j], ">>") == 0) 
+            {
+                int fd = open(args[j+1], O_WRONLY | O_CREAT | O_APPEND, 0644);
+                dup2(fd, STDOUT_FILENO);
+                close(fd);
+                args[j] = NULL;
+                break;
+            }
+            
+            // Input Redirection
+
+
+            else if (strcmp(args[j], "<") == 0) 
+            {
+                int fd = open(args[j+1], O_RDONLY);
+                if (fd < 0) {
+                    perror(args[j+1]); 
+                    exit(1);
+                }
+                dup2(fd, STDIN_FILENO); 
+                close(fd);
+                args[j] = NULL;
+                break;
+            }
+        }
+
         execvp(args[0], args);
         // the next two lines should not run, if they do print something bad has happened
         perror("exec() ERROR"); 

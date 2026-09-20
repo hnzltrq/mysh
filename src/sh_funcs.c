@@ -60,7 +60,7 @@ void parse_and_execute(char *input)
         waitpid(pid, NULL, 0);
     } 
     else {
-        perror("Fork failed");
+        perror("ERROR");
     }
 
 }

@@ -1,12 +1,12 @@
-# Compiler settings
+# Compiler settings, C23 with POSIX/GNU extensions enabeld
 CC = gcc
-CFLAGS = -Wall -Wextra -std=gnu23 -O2
+CFLAGS = -Wall -Wextra -std=gnu23 -Isrc
 
 # Name of the final executable
 TARGET = mysh
 
 # Find all .c files in the current directory
-SRCS = $(wildcard *.c)
+SRCS = $(wildcard src/*.c)
 OBJS = $(SRCS:.c=.o)
 
 # Default target

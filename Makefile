@@ -2,7 +2,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -std=gnu23 -Isrc
 
-# Name of the final executable
+
 TARGET = mysh
 
 # Find all .c files in the src directory
@@ -11,11 +11,11 @@ OBJS = $(SRCS:.c=.o)
 
 all: $(TARGET)
 
-# Links the final binary
+# Links the final executable
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
 
-# Compile C files into object files
+
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 

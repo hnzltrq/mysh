@@ -6,6 +6,7 @@
 #include <sys/wait.h>
 #include "sh_funcs.h"
 #include "built_in_funcs.h"
+#include <fcntl.h>
 
 
 void parse_and_execute(char *input)
@@ -28,9 +29,9 @@ void parse_and_execute(char *input)
     }
 
     // for debugging
-   /*for (int j = 0; j <= i; j ++)
+   /*for (int ji = 0; ji <= i; ji ++)
     {
-        printf("word number %d %s\n", j, args[j]);
+        printf("word number %d %s\n", ji, args[ji]);
     }*/
     
 
@@ -50,17 +51,21 @@ void parse_and_execute(char *input)
     // for non nuilt in commands
     int pid = fork();
 
+    // input redirection if >, >> or <, << show up
+    
+
+
     if (pid == 0) {
         execvp(args[0], args);
         // the next two lines should not run, if they do print something bad has happened
-        perror("ERROR"); 
+        perror("exec() ERROR"); 
         exit(1); 
     } 
     else if (pid > 0) {
         waitpid(pid, NULL, 0);
     } 
     else {
-        perror("ERROR");
+        perror("fork() ERROR");
     }
 
 }

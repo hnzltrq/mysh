@@ -15,11 +15,13 @@ int main(void)
 
         if (strcmp (command, "exit")==0) // exits shell
         {
-            free (command);
+            free (command); // frees space allocated for the string
             break;
         }
 
         parse_and_execute(command); // does the actual work
         
     }
+
+    return 0;
 }

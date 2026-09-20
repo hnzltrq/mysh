@@ -31,7 +31,20 @@ void parse_and_execute(char *input)
     }*/
     
 
-    // Execution
-
+    // Execution (for non nuilt in commands)
+    int pid = fork();
+    
+    if (pid == 0) {
+        execvp(args[0], args);
+        // the next two lines should not run, if they do print something bad has happened
+        perror("Error"); 
+        exit(1); // closes the cloned process
+    } 
+    else if (pid > 0) {
+        waitpid(pid, NULL, 0);
+    } 
+    else {
+        perror("Fork failed");
+    }
 
 }

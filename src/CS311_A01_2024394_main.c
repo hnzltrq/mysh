@@ -12,7 +12,7 @@ int main(void)
 {
     char * command;
 
-    while ((command = linenoise("What be ye commmand> ")) !=NULL) // loops runs continosuly reading and executing commands
+    while ((command = linenoise("What be thy command? >")) !=NULL) // loops runs continosuly reading and executing commands
     {
 
         // printf("input: %s\n", command); // Meant to be used for debugging

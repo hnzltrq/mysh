@@ -4,6 +4,10 @@
 #include "linenoise.h"
 #include "sh_funcs.h"
 
+
+ProcessRecord process_list[MAX_PROCESSES] = {0};
+
+
 int main(void)
 {
     char * command;

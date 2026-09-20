@@ -32,7 +32,7 @@ Which will then build the `mysh` binary that can be run as a program.
 - `cd ` command doesnt recognize commonly used short hands such as `~` for the home directory, etc. However the short hands for `..` being a directory up a level and `.` being the current directory are supported as they're built into the linux file system.
 - It is entirely possible that if the user terminates the running program using the `ctrl+C` short cut, some memory might be left unfreeed, however most Operating systems should be able to deal with that. I think. 
 - The way pipelining is implemented, it will completey bypass the built in `cd` and `pwd` functions. 
-
+- occationally a command run with `sudo` fails to recognize root password and freezes the shell.
 
 
 

@@ -8,23 +8,24 @@
 #include "built_in_funcs.h"
 #include <fcntl.h>
 
-
-
-// structure for proc information
-typedef struct 
-{
-    pid_t pid;
-    char name[64];
-    int is_active; // 1 = active, 0 = done
-} ProcessRecord;
-
-#define MAX_PROCESSES 64
-extern ProcessRecord process_list[MAX_PROCESSES]; 
-
-
-
 void parse_and_execute(char *input)
 {
+    // zombie process remover
+    int status;
+    pid_t reaped_pid;
+    while ((reaped_pid = waitpid(-1, &status, WNOHANG)) > 0) 
+    {
+        for (int k = 0; k < MAX_PROCESSES; k++) 
+        {
+            if (process_list[k].is_active == 1 && process_list[k].pid == reaped_pid) 
+            {
+                process_list[k].is_active = 0; // Expunge it
+                printf("[Background process %d (%s) finished]\n", reaped_pid, process_list[k].name);
+                break;
+            }
+        }
+    }
+
     // parsing
     int i = 0;
     char *args[64]; // Array to hold up to 64 individual strings
@@ -136,6 +137,16 @@ void parse_and_execute(char *input)
     
     if (strcmp(args[0], "pwd") == 0) {
         pwd();
+        return; 
+    }
+    if (strcmp(args[0], "ps") == 0) 
+    {
+        ps();
+        return; 
+    }
+    if (strcmp(args[0], "kill") == 0) 
+    {
+        kill(args);
         return; 
     }
 

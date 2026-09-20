@@ -19,6 +19,6 @@ $(TARGET): $(OBJS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# deletes generated obj files
+# deletes generated obj files and final binary
 clean:
 	rm -f $(OBJS) $(TARGET)

@@ -1,9 +1,12 @@
+// thiss is the main shell function that parses and runs the appropriate programs/commands
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
 #include "sh_funcs.h"
+#include "built_in_funcs.h"
+
 
 void parse_and_execute(char *input)
 {
@@ -31,14 +34,27 @@ void parse_and_execute(char *input)
     }*/
     
 
-    // Execution (for non nuilt in commands)
-    int pid = fork();
+    // Execution 
+
+    // for built in commands (pwd, and cd)
+    if (strcmp(args[0], "cd") == 0) {
+        cd(args);
+        return; 
+    }
     
+    if (strcmp(args[0], "pwd") == 0) {
+        pwd();
+        return; 
+    }
+
+    // for non nuilt in commands
+    int pid = fork();
+
     if (pid == 0) {
         execvp(args[0], args);
         // the next two lines should not run, if they do print something bad has happened
-        perror("Error"); 
-        exit(1); // closes the cloned process
+        perror("ERROR"); 
+        exit(1); 
     } 
     else if (pid > 0) {
         waitpid(pid, NULL, 0);

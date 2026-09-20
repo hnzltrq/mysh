@@ -1,5 +1,5 @@
 # mysh
-<sub><sup>Written by M. Hanzla Tariq (2024934)</sup></sub>
+<sub><sup>Written by M. Hanzla Tariq (2024394)</sup></sub>
 
 A simple UNIX shell written in C. Made as a course project. (CS331 at GIKI). 
 
@@ -35,7 +35,7 @@ Which will then build the `mysh` binary that can be run as a program.
 - It is entirely possible that if the user terminates the running program using the `ctrl+C` short cut, some memory might be left unfreeed, however most Operating systems should be able to deal with that. I think. 
 - The way pipelining is implemented, it will completey bypass the built in `cd` and `pwd` functions. 
 - occationally a command run with `sudo` fails to recognize root password and freezes the shell.
-- The shell doesn't support the AND operator `&&`, rather its functionality can be achieved by stringing together commands with the `&` operator. The first command will run in the background followed by the second command. If there are more then one commands being strung together all but the last one will run in the background.
+- The shell doesn't support the logical AND operator `&&`. However, multiple commands can still be strung together on a single line using the `&` operator, which will launch them concurrently in the background. If there are more then one commands being strung together all but the last one will run in the background.
 - For commands like `grep "zip"`, mysh will not strip out the quotation marks to pass to grep, rather would pass the entire string including quotation marks to grep. Grep would then search for `"zip"` (including quotation marks). Similar happens with commands like echo, wc, etc.
 - Executing out `cd` with no arguments does not take you back to the home page, rather just asks user to enter an argument.
 - The custom `kill` command does occationally end up killing the shell itself.

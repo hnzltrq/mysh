@@ -29,7 +29,7 @@ void pwd(void) {
 }
 
 
-void ps(void) 
+void ps2(void) 
 {
     printf("PID\tCOMMAND\n");
     for (int k = 0; k < MAX_PROCESSES; k++) 
@@ -43,7 +43,7 @@ void ps(void)
 
 
 
-void kill(char **args) {
+void kill2(char **args) {
     if (args[1] == NULL) {
         fprintf(stderr, "kill requires a PID\n");
         return;

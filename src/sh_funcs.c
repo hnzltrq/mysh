@@ -141,12 +141,12 @@ void parse_and_execute(char *input)
     }
     if (strcmp(args[0], "ps") == 0) 
     {
-        ps();
+        ps2();
         return; 
     }
     if (strcmp(args[0], "kill") == 0) 
     {
-        kill(args);
+        kill2(args);
         return; 
     }
 

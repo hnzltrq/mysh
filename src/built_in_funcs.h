@@ -5,5 +5,6 @@
 
 void cd(char **args);
 void pwd(void);
-
+void kill2(char **args);
+void ps2(void);
 #endif

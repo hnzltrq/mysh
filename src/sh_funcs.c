@@ -86,7 +86,7 @@ void parse_and_execute(char *input)
         pid_t pid2 = fork();
         if (pid2 == 0) 
         {
-            // Overwrite keyboard input with the pipe's read end
+            
             dup2(pipefd[0], STDIN_FILENO);
             
             // Close both ends

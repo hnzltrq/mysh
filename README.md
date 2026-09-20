@@ -21,9 +21,11 @@ Which will then build the `mysh` binary that can be run as a program.
 - Standard GNU/Linux commands are fully supported (ls, grep, mkdir, etc)
 - I/O redirection with the `>>`, `>`, `<` operators are also supported. (The here document opeartor `<<` is not supported.)
 - `cd` and `pwd` are built-in.
-- supports pipelining with the `|` opeartor.
+- Supports pipelining with the `|` opeartor.
 - Uses the [linenoise](https://github.com/antirez/linenoise) library for clean user input.
-
+- Run processes in the background with the `&` operator.
+- Has a custom `ps` command that tracks currently running processes made by the shell.
+- Has a custom `kill` command that kills processes made by the shell.
 
 ## Limitations
 - If a user tries to run a command which has more then 63 words (since the 64th string needs to be a NULL), the parsing will overflow and the program fail; presumably no commands that long are required.
@@ -33,6 +35,6 @@ Which will then build the `mysh` binary that can be run as a program.
 - It is entirely possible that if the user terminates the running program using the `ctrl+C` short cut, some memory might be left unfreeed, however most Operating systems should be able to deal with that. I think. 
 - The way pipelining is implemented, it will completey bypass the built in `cd` and `pwd` functions. 
 - occationally a command run with `sudo` fails to recognize root password and freezes the shell.
-
+- The shell doesn't support the AND operator `&&`, rather its functionality can be achieved by stringing together commands with the `&` operator. The first command will run in the background followed by the second command. If there are more then one commands being strung together all but the last one will run in the background.
 
 

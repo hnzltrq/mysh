@@ -8,58 +8,8 @@
 #include "built_in_funcs.h"
 #include <fcntl.h>
 
-void parse_and_execute(char *input)
+void execute_command(char **args, int is_background)
 {
-    // zombie process remover
-    int status;
-    pid_t reaped_pid;
-    while ((reaped_pid = waitpid(-1, &status, WNOHANG)) > 0) 
-    {
-        for (int k = 0; k < MAX_PROCESSES; k++) 
-        {
-            if (process_list[k].is_active == 1 && process_list[k].pid == reaped_pid) 
-            {
-                process_list[k].is_active = 0; // Expunge it
-                printf("[Background process %d (%s) finished]\n", reaped_pid, process_list[k].name);
-                break;
-            }
-        }
-    }
-
-    // parsing
-    int i = 0;
-    char *args[64]; // Array to hold up to 64 individual strings
-    char *token = strtok(input, " \t");
-    while (token != NULL && i < 63) 
-    {
-        args[i] = token;
-        i++;
-        token = strtok(NULL, " \t"); // Gets the next word
-    }
-    args[i] = NULL; // terminates the char array with a NULL as is needed for exec system calls 
-
-    if (args[0] == NULL) // returns if the commands are empty
-    {
-        return;
-    }
-
-    // for debugging
-   /*for (int ji = 0; ji <= i; ji ++)
-    {
-        printf("word number %d %s\n", ji, args[ji]);
-    }*/
-    
-    // background process command detection
-    int is_background = 0;
-    if (i > 0 && strcmp(args[i-1], "&") == 0) 
-    {
-        is_background = 1;
-        args[i-1] = NULL; 
-    }
-
-    // Execution 
-
-
     // scanning and implementing for pipelining 
 
     int pipe_index = -1;
@@ -232,5 +182,98 @@ void parse_and_execute(char *input)
     {
         perror("fork() ERROR");
     }
+}
 
+
+void parse_and_execute(char *input)
+{
+    // zombie process remover
+    int status;
+    pid_t reaped_pid;
+    while ((reaped_pid = waitpid(-1, &status, WNOHANG)) > 0) 
+    {
+        for (int k = 0; k < MAX_PROCESSES; k++) 
+        {
+            if (process_list[k].is_active == 1 && process_list[k].pid == reaped_pid) 
+            {
+                process_list[k].is_active = 0; // Expunge it
+                printf("[Background process %d (%s) finished]\n", reaped_pid, process_list[k].name);
+                break;
+            }
+        }
+    }
+
+    // parsing
+
+    /*    int i = 0;    // (old code, now deprecated)
+    char *args[64]; // Array to hold up to 64 individual strings
+    char *token = strtok(input, " \t");
+    while (token != NULL && i < 63) 
+    {
+        args[i] = token;
+        i++;
+        token = strtok(NULL, " \t"); // Gets the next word
+    }
+    args[i] = NULL; // terminates the char array with a NULL as is needed for exec system calls 
+
+    if (args[0] == NULL) // returns if the commands are empty
+    {
+        return;
+    }
+
+*/
+
+    int i = 0;
+    char *raw_args[64]; 
+    char *token = strtok(input, " \t");
+    while (token != NULL && i < 63) {
+        raw_args[i] = token;
+        i++;
+        token = strtok(NULL, " \t");
+    }
+    raw_args[i] = NULL; 
+
+    if (raw_args[0] == NULL) {
+        return;
+    }
+
+    // for debugging
+   /*for (int ji = 0; ji <= i; ji ++)
+    {
+        printf("word number %d %s\n", ji, args[ji]);
+    }*/
+    
+ 
+/*   // background process command detection    // old code 
+    int is_background = 0;
+    if (i > 0 && strcmp(args[i-1], "&") == 0) 
+    {
+        is_background = 1;
+        args[i-1] = NULL; 
+    }
+*/
+
+    // Execution 
+    int start = 0; // Tracks where the current command chunk begins
+    for (int j = 0; j <= i; j++) 
+    {
+        if (raw_args[j] == NULL || strcmp(raw_args[j], "&") == 0) 
+        {
+            int is_bg = 0;
+            
+            if (raw_args[j] != NULL && strcmp(raw_args[j], "&") == 0) 
+            {
+                is_bg = 1;
+                raw_args[j] = NULL;
+            }
+            
+        
+            if (raw_args[start] != NULL) 
+            {
+                execute_command(&raw_args[start], is_bg);
+            }
+            
+            start = j + 1; 
+        }
+    }
 }

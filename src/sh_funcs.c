@@ -84,7 +84,6 @@ void parse_and_execute(char *input)
             
             // Input Redirection
 
-
             else if (strcmp(args[j], "<") == 0) 
             {
                 int fd = open(args[j+1], O_RDONLY);

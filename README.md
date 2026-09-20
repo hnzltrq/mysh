@@ -2,7 +2,7 @@
 A simple UNIX shell written in C. Made as a course project. 
 
 
-# Build Instructions
+## Build Instructions
 You will need gcc 16.0.0 or higher to compile the C23 code, along with make version 4.0.0 or higher.
 To build the project, simply run:
 ```bash

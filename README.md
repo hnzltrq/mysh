@@ -38,5 +38,5 @@ Which will then build the `mysh` binary that can be run as a program.
 - The shell doesn't support the logical AND operator `&&`. However, multiple commands can still be strung together on a single line using the `&` operator, which will launch them concurrently in the background. If there are more then one commands being strung together all but the last one will run in the background.
 - For commands like `grep "zip"`, mysh will not strip out the quotation marks to pass to grep, rather would pass the entire string including quotation marks to grep. Grep would then search for `"zip"` (including quotation marks). Similar happens with commands like echo, wc, etc.
 - Executing out `cd` with no arguments does not take you back to the home page, rather just asks user to enter an argument.
-- The custom `kill` command does occationally end up killing the shell itself.
+- The custom `kill` command does occationally end up killing the shell itself. Although this may have been fixed now (by adding input validation for the custom kill function).
 - Piping and I/O redirection do not play together nicely.
